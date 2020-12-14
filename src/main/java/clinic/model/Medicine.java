@@ -1,26 +1,30 @@
-package clinic;
+package clinic.model;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.Data;
+
 @Data
 @Entity
-public class Doctor extends Person{
+@Table
+public class Medicine {
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column
-	private String positon;
+	private String name;
 	@Column
-	private int exp;
+	private String effect;
 	@Column
-	private String level;
+	private String instruction;
 	@Column
-	private String specialty;
+	private String contraindication;
 	@Column
-	private int salary;
+	private int price;
 	
 }

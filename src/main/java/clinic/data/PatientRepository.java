@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import clinic.model.Doctor;
+import clinic.model.Patient;
 @EnableJpaRepositories
-public interface DoctorRepository extends CrudRepository<Doctor, Integer>{
-	@Query(value="SELECT p FROM Doctor p WHERE p.person.name LIKE %?1%")
-    public List<Doctor> searchbyName(@Param("keyword") String keyword);
+public interface PatientRepository extends CrudRepository<Patient, Integer>{
+	@Query(value="SELECT p FROM Patient p WHERE p.person.name LIKE %?1%")
+   public List<Patient> searchbyName(@Param("keyword") String keyword);
 }

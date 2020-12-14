@@ -15,52 +15,53 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import clinic.data.PersonRepository;
-import clinic.model.Person;
+import clinic.data.SupportRepository;
+import clinic.model.Support;
 
 @RestController
-@RequestMapping(path = "/person", produces = "application/json")
+@RequestMapping(path = "/support", produces = "application/json")
 @CrossOrigin(origins = "*")
-public class PersonController {
-	private PersonRepository personRepo;
+public class SupportController {
+	private SupportRepository supportRepo;
 	@Autowired
 	EntityLinks entityLinks;
 
-	public PersonController(PersonRepository personRepo) {
-		this.personRepo = personRepo;
+	public SupportController(SupportRepository supportRepo) {
+		this.supportRepo = supportRepo;
 	}
-	
+
 	@GetMapping
-	public Iterable<Person> getPersonAll() {
-		return personRepo.findAll();
+	public Iterable<Support> getSupportAll() {
+		return supportRepo.findAll();
 	}
 
 	@GetMapping("/{id}")
-	public Person getPersonById(@PathVariable("id") String id) {
-		Optional<Person> optPerson = personRepo.findById(id);
-		if (optPerson.isPresent()) {
-			return optPerson.get();
+	public Support getSupportById(@PathVariable("id") int id) {
+		Optional<Support> optSupport = supportRepo.findById(id);
+		if (optSupport.isPresent()) {
+			return optSupport.get();
 		}
 		return null;
 	}
-	@GetMapping("/search/{keyword}")
-	public Iterable<Person> searchPerson(@PathVariable("keyword") String keyword) {
-		return personRepo.search(keyword);
-	}	
+	@GetMapping("/statistic/nurse/{keyword}/{id}")
+	public Iterable<Support> statisticTestbyDoctor(@PathVariable("keyword") String keyword,@PathVariable("id") String id) {
+		return supportRepo.payRollNursebyMonth(keyword, id);
+	}
+	
 	@PostMapping(consumes = "application/json")
-	public Person postPerson(@RequestBody Person person) {
-		return personRepo.save(person);
+	public Support postSupport(@RequestBody Support support) {
+		return supportRepo.save(support);
 	}
 
 	@PutMapping("/{id}")
-	public Person putPerson(@RequestBody Person person) {
-		return personRepo.save(person);
+	public Support putSupport(@RequestBody Support support) {
+		return supportRepo.save(support);
 	}
 
 	@DeleteMapping("/{id}")
-	public void deletePerson(@PathVariable("id") String id) {
+	public void deleteTest(@PathVariable("id") Integer id) {
 		try {
-			personRepo.deleteById(id);
+			supportRepo.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
 		}
 	}

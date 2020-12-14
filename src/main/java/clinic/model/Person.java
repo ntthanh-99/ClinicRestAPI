@@ -1,12 +1,12 @@
-package clinic;
+package clinic.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
 import lombok.Data;
 @Data
 @Entity
+
 public class Person {
 	@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +19,5 @@ public class Person {
 	private String address;
 	@Column
 	private String phone;
+	
 }

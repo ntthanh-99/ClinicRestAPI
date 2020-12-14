@@ -15,52 +15,53 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import clinic.data.PersonRepository;
-import clinic.model.Person;
+import clinic.data.NurseRepository;
+import clinic.model.Nurse;
+
 
 @RestController
-@RequestMapping(path = "/person", produces = "application/json")
+@RequestMapping(path = "/nurse", produces = "application/json")
 @CrossOrigin(origins = "*")
-public class PersonController {
-	private PersonRepository personRepo;
+public class NurseController {
+	private NurseRepository nurseRepo;
 	@Autowired
 	EntityLinks entityLinks;
 
-	public PersonController(PersonRepository personRepo) {
-		this.personRepo = personRepo;
+	public NurseController(NurseRepository nurseRepo) {
+		this.nurseRepo = nurseRepo;
 	}
-	
+
 	@GetMapping
-	public Iterable<Person> getPersonAll() {
-		return personRepo.findAll();
+	public Iterable<Nurse> getNurseAll() {
+		return nurseRepo.findAll();
 	}
 
 	@GetMapping("/{id}")
-	public Person getPersonById(@PathVariable("id") String id) {
-		Optional<Person> optPerson = personRepo.findById(id);
-		if (optPerson.isPresent()) {
-			return optPerson.get();
+	public Nurse getNurseById(@PathVariable("id") int id) {
+		Optional<Nurse> optNurse = nurseRepo.findById(id);
+		if (optNurse.isPresent()) {
+			return optNurse.get();
 		}
 		return null;
 	}
 	@GetMapping("/search/{keyword}")
-	public Iterable<Person> searchPerson(@PathVariable("keyword") String keyword) {
-		return personRepo.search(keyword);
-	}	
+	public Iterable<Nurse> searchNurse(@PathVariable("keyword") String keyword) {
+		return nurseRepo.searchbyName(keyword);
+	}
 	@PostMapping(consumes = "application/json")
-	public Person postPerson(@RequestBody Person person) {
-		return personRepo.save(person);
+	public Nurse postDoctor(@RequestBody Nurse nurse) {
+		return nurseRepo.save(nurse);
 	}
 
 	@PutMapping("/{id}")
-	public Person putPerson(@RequestBody Person person) {
-		return personRepo.save(person);
+	public Nurse putDoctor(@RequestBody Nurse nurse) {
+		return nurseRepo.save(nurse);
 	}
 
 	@DeleteMapping("/{id}")
-	public void deletePerson(@PathVariable("id") String id) {
+	public void deleteDoctor(@PathVariable("id") Integer id) {
 		try {
-			personRepo.deleteById(id);
+			nurseRepo.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
 		}
 	}
