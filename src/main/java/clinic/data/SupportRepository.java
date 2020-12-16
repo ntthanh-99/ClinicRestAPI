@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 import clinic.model.Support;
 
 public interface SupportRepository extends CrudRepository<Support, Integer>{
-	@Query(value="SELECT s.* FROM Support s INNER JOIN Test t on t.id=s.tbltestid WHERE t.datein LIKE %:keyword% AND t.status='Mắc bệnh' AND s.tblnurseid = :id ;",nativeQuery = true)
+	@Query(value="SELECT s.* FROM support s INNER JOIN test t on t.id=s.tbltestid WHERE t.datein LIKE %:keyword% AND t.status='Mắc bệnh' AND s.tblnurseid = :id ;",nativeQuery = true)
     public List<Support> payRollNursebyMonth(@Param("keyword") String keyword, @Param("id") String id);
 }
